@@ -1,0 +1,8 @@
+node_modules/
+.next/
+__pycache__/
+.env
+.manus-logs/
+marine-debris-fls-datasets-master/md_fls_dataset/data/
+*.zip
+*.tar.gz

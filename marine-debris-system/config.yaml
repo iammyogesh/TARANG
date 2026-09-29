@@ -1,0 +1,21 @@
+# Training configuration consumed by `python cli.py train --config config.yaml`
+# Fields map directly onto train_pipeline.TrainConfig.
+
+data_yaml: ./prepared_data/data.yaml   # produced by `python cli.py prepare`
+model_arch: yolov8n.pt                  # use yolov8x.pt if you have the GPU budget for it
+epochs: 100
+imgsz: 640
+batch: 16
+device: cpu                             # set to 0 (or "0,1") for GPU
+project: runs/train
+name: sonar_debris
+patience: 20
+
+# Optional: override any of the sonar-tuned defaults from SONAR_AUGMENTATION_CONFIG.
+# Omit this whole section to just use the defaults.
+augmentation:
+  hsv_v: 0.4
+  degrees: 5.0
+  fliplr: 0.5
+  flipud: 0.0
+  mosaic: 1.0

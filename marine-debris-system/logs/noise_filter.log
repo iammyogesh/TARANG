@@ -1,0 +1,3 @@
+2026-09-29 09:54:28 | INFO     | noise_filter | Noise filter dropped 1/3 detections below 15.0% confidence
+2026-09-29 09:54:49 | INFO     | noise_filter | Noise filter dropped 2/4 detections below 15.0% confidence
+2026-09-29 11:47:51 | INFO     | noise_filter | Noise filter dropped 1/2 detections below 15.0% confidence

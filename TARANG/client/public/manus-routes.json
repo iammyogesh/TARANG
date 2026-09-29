@@ -1,0 +1,13 @@
+{
+  "routes": [
+    { "path": "/", "title": "Mission Control" },
+    { "path": "/review", "title": "Review Queue" },
+    { "path": "/missions", "title": "Missions" },
+    { "path": "/detections", "title": "Detections" },
+    { "path": "/map", "title": "Geotag Map" },
+    { "path": "/model", "title": "Model Health" },
+    { "path": "/reports", "title": "Reports" },
+    { "path": "/settings", "title": "Settings" },
+    { "path": "/404", "title": "Not Found" }
+  ]
+}

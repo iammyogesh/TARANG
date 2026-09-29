@@ -1,0 +1,22 @@
+{
+  "sensors": [
+    {
+      "sensor_id": "default",
+      "start_lat": 13.0827,
+      "start_lon": 80.2707,
+      "heading_deg": 90.0,
+      "along_track_resolution_m": 0.05,
+      "cross_track_resolution_m": 0.05,
+      "slant_range_m": 50.0
+    },
+    {
+      "sensor_id": "auv_survey_02",
+      "start_lat": 8.4855,
+      "start_lon": 76.9492,
+      "heading_deg": 45.0,
+      "along_track_resolution_m": 0.03,
+      "cross_track_resolution_m": 0.03,
+      "slant_range_m": 75.0
+    }
+  ]
+}
