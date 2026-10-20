@@ -6,3 +6,8 @@ __pycache__/
 marine-debris-fls-datasets-master/md_fls_dataset/data/
 *.zip
 *.tar.gz
+*.log
+*.webm
+*.mp4
+!frontend/public/real-ocean.mp4
+
