@@ -86,7 +86,8 @@ export default function IngestionPortal() {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 20000);
 
-        const response = await fetch('http://localhost:8000/api/scans/analyze', {
+        const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+        const response = await fetch(`${apiBase}/api/scans/analyze`, {
           method: 'POST',
           body: formData,
           signal: controller.signal,
