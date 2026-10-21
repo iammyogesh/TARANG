@@ -86,17 +86,28 @@ export default function IngestionPortal() {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 20000);
 
-        const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-        const response = await fetch(`${apiBase}/api/scans/analyze`, {
+        const rawApiBase = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+        const apiBase = rawApiBase.replace(/\/+$/, '');
+
+        let response = await fetch(`${apiBase}/api/scans/analyze`, {
           method: 'POST',
           body: formData,
           signal: controller.signal,
         });
+
+        // Fallback to /api/predict if backend only exposes /api/predict
+        if (response.status === 404) {
+          response = await fetch(`${apiBase}/api/predict`, {
+            method: 'POST',
+            body: formData,
+            signal: controller.signal,
+          });
+        }
         clearTimeout(timeoutId);
 
         if (response.ok) {
           const json = await response.json();
-          resultData = json.results;
+          resultData = json.results || (json.detections ? json : null);
         }
       } catch (networkErr) {
         console.warn('Live backend response unavailable, running local scan analysis:', networkErr);

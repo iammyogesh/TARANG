@@ -32,7 +32,27 @@ tow_engine = TowPathEngine(base_tow_config)
 print("TARANG ML API ready. Listening on port 5000.")
 
 
+@app.route('/', methods=['GET'])
+def root():
+    return jsonify({
+        "status": "online",
+        "service": "TARANG AI Ocean Anomaly Detection Engine",
+        "version": "1.0.0",
+        "endpoints": ["/api/predict", "/api/scans/analyze", "/api/health"]
+    })
+
+
+@app.route('/api/health', methods=['GET'])
+def health():
+    return jsonify({
+        "status": "online",
+        "model": "YOLOv8m-Sonar-94.3",
+        "ready": True
+    })
+
+
 @app.route('/api/predict', methods=['POST'])
+@app.route('/api/scans/analyze', methods=['POST'])
 def predict():
     start_time = time.time()
 
@@ -117,13 +137,20 @@ def predict():
 
     processing_ms = int((time.time() - start_time) * 1000)
 
-    return jsonify({
+    res_payload = {
         "request_id": f"REQ-{uuid.uuid4().hex[:8].upper()}",
         "model_version": "YOLOv8m-Sonar-94.3",
         "processing_ms": processing_ms,
         "image_width": w,
         "image_height": h,
         "detections": response_detections,
+    }
+
+    return jsonify({
+        "success": True,
+        "filename": secure_filename(file.filename or "upload.png"),
+        "results": res_payload,
+        **res_payload,
     })
 
 
