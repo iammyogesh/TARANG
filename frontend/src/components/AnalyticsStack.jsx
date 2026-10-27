@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, useMotionValue, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
   FileText,
   FolderOpen,
@@ -14,34 +14,16 @@ import {
 import confetti from 'canvas-confetti';
 import { useTarangStore } from '../stores/useTarangStore';
 
-// 3D Card Wrapper with Physics Tilt
+// Silky-Smooth Tactile 3D Card Wrapper (Hardware Accelerated, Stutter-Free)
 function Card3D({ children, className = '', delay = 0 }) {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const rotateX = useTransform(mouseY, [-100, 100], [6, -6]);
-  const rotateY = useTransform(mouseX, [-150, 150], [-6, 6]);
-
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    mouseX.set(e.clientX - rect.left - rect.width / 2);
-    mouseY.set(e.clientY - rect.top - rect.height / 2);
-  };
-
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-  };
-
   return (
     <motion.div
-      initial={{ opacity: 0, rotateX: -25, z: 120, y: 30 }}
-      animate={{ opacity: 1, rotateX: 0, z: 0, y: 0 }}
-      exit={{ opacity: 0, rotateX: 30, z: -250, y: -20, transition: { duration: 0.5 } }}
-      transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] }}
-      style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className={`relative rounded-3xl backdrop-blur-3xl bg-white/95 border border-white/90 shadow-[0_20px_50px_rgba(0,12,30,0.22),0_1px_3px_rgba(255,255,255,0.9)_inset] transition-shadow duration-300 hover:shadow-[0_25px_60px_rgba(0,180,216,0.25)] ${className}`}
+      initial={{ opacity: 0, y: 24, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: -20, scale: 0.95, transition: { duration: 0.4 } }}
+      whileHover={{ y: -3, transition: { duration: 0.2, ease: 'easeOut' } }}
+      transition={{ duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] }}
+      className={`relative rounded-3xl backdrop-blur-2xl bg-white/95 border border-white/90 shadow-[0_15px_35px_rgba(0,12,30,0.18),0_1px_3px_rgba(255,255,255,0.9)_inset] transition-all duration-300 hover:shadow-[0_22px_45px_rgba(0,180,216,0.22)] hover:border-cyan-100 will-change-transform transform-gpu ${className}`}
     >
       {children}
     </motion.div>

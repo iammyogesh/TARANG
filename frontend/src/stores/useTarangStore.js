@@ -17,8 +17,8 @@ export const useTarangStore = create((set) => ({
   setSelectedHazardIndex: (index) => set({ selectedHazardIndex: index }),
   setMinConfidence: (val) => set({ minConfidence: val }),
 
-  // 3D Viewport Controls
-  viewMode: '3D_SEABED', // '3D_SEABED' | 'SONAR_TEXTURE'
+  // 3D & Geospatial Viewport Controls
+  viewMode: 'REAL_MAP', // 'REAL_MAP' | 'SONAR_TEXTURE' | '3D_SEABED'
   setViewMode: (viewMode) => set({ viewMode }),
   focusedCoordinate: null,
   setFocusedCoordinate: (coord) => set({ focusedCoordinate: coord }),
