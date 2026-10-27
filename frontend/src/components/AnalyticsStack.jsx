@@ -97,7 +97,7 @@ export default function AnalyticsStack() {
   };
 
   return (
-    <div className="space-y-4 flex flex-col justify-between h-full perspective-1200">
+    <div className="space-y-4 flex flex-col justify-between h-full">
       {/* 3D CARD 1: Executive Scan Overview (Zero Clutter) */}
       <Card3D delay={0.1} className="p-6">
         <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">

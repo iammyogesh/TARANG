@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Waves, Sparkles, AlertCircle, ArrowRight } from 'lucide-react';
 import { useTarangStore } from '../stores/useTarangStore';
 
@@ -8,25 +8,6 @@ export default function IngestionPortal() {
   const [isDragOver, setIsDragOver] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const fileInputRef = useRef(null);
-
-  // 3D Physical Tilt Tracking on Mouse Move
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const rotateX = useTransform(mouseY, [-200, 200], [12, -12]);
-  const rotateY = useTransform(mouseX, [-200, 200], [-12, 12]);
-
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    mouseX.set(x);
-    mouseY.set(y);
-  };
-
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-  };
 
   const getDemoDetections = (filename) => ({
     success: true,
@@ -161,42 +142,37 @@ export default function IngestionPortal() {
   if (state !== 'IDLE' && state !== 'INGESTING') return null;
 
   return (
-    <div className="fixed inset-0 z-20 flex flex-col items-center justify-center p-6 pointer-events-auto perspective-1200">
-      {/* 3D Floating Spatial Card */}
+    <div className="fixed inset-0 z-20 flex flex-col items-center justify-center p-6 pointer-events-auto">
+      {/* Silky-Smooth Pearl Glass Card (Zero-Stutter, Hardware-Accelerated) */}
       <AnimatePresence>
         <motion.div
           key="ingestion-portal-card"
-          initial={{ opacity: 0, scale: 0.85, z: -150, rotateX: 25 }}
+          initial={{ opacity: 0, scale: 0.92, y: 30 }}
           animate={
             state === 'INGESTING'
               ? {
-                  // Unique 3D Folding Disappear Animation: Tilts back, recedes deep into the water, and dissolves
-                  rotateX: 75,
-                  rotateY: -15,
-                  z: -500,
-                  scale: 0.5,
+                  scale: 0.88,
+                  y: 80,
                   opacity: 0,
                   filter: 'blur(8px)',
-                  transition: { duration: 1.1, ease: [0.16, 1, 0.3, 1] },
+                  transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] },
                 }
               : {
                   opacity: 1,
                   scale: 1,
-                  z: 0,
+                  y: 0,
                   filter: 'blur(0px)',
-                  transition: { duration: 1.0, ease: [0.16, 1, 0.3, 1] },
+                  transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
                 }
           }
-          exit={{ opacity: 0, scale: 0.5, z: -500, rotateX: 80 }}
-          style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-          className="relative max-w-xl w-full"
+          exit={{ opacity: 0, scale: 0.8, y: 100 }}
+          whileHover={{ y: -4, transition: { duration: 0.2, ease: 'easeOut' } }}
+          className="relative max-w-xl w-full transform-gpu will-change-transform"
         >
-          {/* Physical 3D Drop Shadow & Volumetric Ambient Glow */}
-          <div className="absolute -inset-2 rounded-[38px] bg-gradient-to-tr from-cyan-400/25 via-sky-300/15 to-blue-500/25 blur-2xl opacity-70 transform translate-z-[-30px]" />
+          {/* Subtle Ambient Drop Shadow Glow */}
+          <div className="absolute -inset-1 rounded-[38px] bg-gradient-to-tr from-cyan-400/20 via-sky-300/10 to-blue-500/20 blur-xl opacity-60 pointer-events-none" />
 
-          {/* Frosted Pearl White 3D Beveled Card */}
+          {/* Frosted Pearl White Card Surface */}
           <div
             onDragOver={(e) => {
               e.preventDefault();
@@ -205,10 +181,10 @@ export default function IngestionPortal() {
             onDragLeave={() => setIsDragOver(false)}
             onDrop={handleDrop}
             onClick={() => fileInputRef.current?.click()}
-            className={`relative rounded-[36px] px-8 sm:px-12 py-10 sm:py-12 backdrop-blur-3xl bg-white/95 border-2 transition-all duration-300 shadow-[0_35px_80px_rgba(0,10,30,0.35),0_1px_3px_rgba(255,255,255,0.9)_inset] cursor-pointer group flex flex-col items-center text-center transform preserve-3d ${
+            className={`relative rounded-[36px] px-8 sm:px-12 py-10 sm:py-12 backdrop-blur-2xl bg-white/95 border-2 transition-all duration-300 shadow-[0_25px_60px_rgba(0,10,30,0.25),0_1px_3px_rgba(255,255,255,0.9)_inset] cursor-pointer group flex flex-col items-center text-center ${
               isDragOver
-                ? 'border-cyan-500 bg-white scale-[1.03] shadow-[0_0_70px_rgba(0,180,216,0.5)]'
-                : 'border-white hover:border-cyan-300 hover:bg-white'
+                ? 'border-cyan-500 bg-white scale-[1.02] shadow-[0_0_60px_rgba(0,180,216,0.4)]'
+                : 'border-white hover:border-cyan-200 hover:shadow-[0_30px_70px_rgba(0,180,216,0.22)]'
             }`}
           >
             <input
@@ -219,9 +195,9 @@ export default function IngestionPortal() {
               onChange={(e) => e.target.files?.[0] && processFile(e.target.files[0])}
             />
 
-            {/* 3D Extruded Brand Emblem */}
-            <div className="flex items-center gap-3 mb-5 transform translate-z-[25px]">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-500 to-sky-400 flex items-center justify-center text-white shadow-lg shadow-cyan-500/30 group-hover:scale-110 transition-transform">
+            {/* Brand Emblem */}
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-500 to-sky-400 flex items-center justify-center text-white shadow-lg shadow-cyan-500/30 group-hover:scale-105 transition-transform">
                 <Waves className="w-6 h-6 animate-pulse" />
               </div>
               <div className="text-left">
@@ -234,17 +210,17 @@ export default function IngestionPortal() {
               </div>
             </div>
 
-            {/* Primary Action Title (Human-Friendly, Zero Clutter) */}
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-3 transform translate-z-[20px]">
+            {/* Primary Action Title */}
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-3">
               Drop Sonar Scan to Begin
             </h2>
 
-            <p className="text-slate-600 text-sm max-w-md leading-relaxed mb-6 font-normal transform translate-z-[15px]">
+            <p className="text-slate-600 text-sm max-w-md leading-relaxed mb-6 font-normal">
               Upload Side-Scan Sonar imagery to dive into the deep bathymetric canyon and pinpoint marine debris.
             </p>
 
             {/* Interactive Upload Button Pill */}
-            <div className="w-full py-4 px-6 rounded-2xl bg-slate-50 border border-slate-200 group-hover:border-cyan-400 group-hover:bg-cyan-50/60 transition-all flex items-center justify-between text-slate-800 text-sm font-semibold shadow-sm transform translate-z-[20px]">
+            <div className="w-full py-4 px-6 rounded-2xl bg-slate-50 border border-slate-200 group-hover:border-cyan-400 group-hover:bg-cyan-50/60 transition-all flex items-center justify-between text-slate-800 text-sm font-semibold shadow-sm">
               <span className="flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-cyan-600" />
                 <span>Select or Drag Sonar Image</span>
@@ -253,7 +229,7 @@ export default function IngestionPortal() {
             </div>
 
             {/* Quick Demo Launch Button */}
-            <div className="mt-5 transform translate-z-[15px]">
+            <div className="mt-5">
               <button
                 type="button"
                 onClick={(e) => {

@@ -36,7 +36,7 @@ function RealOceanMap() {
   } = useTarangStore();
 
   const [activeBaseLayer, setActiveBaseLayer] = useState('OCEAN'); // 'OCEAN' | 'SATELLITE' | 'DARK'
-  const [cursorCoords, setCursorCoords] = useState(null);
+  const cursorCoordsRef = useRef(null);
 
   // Normalize detections and ensure every anomaly has real coordinates
   const anomalies = useMemo(() => {
@@ -111,16 +111,17 @@ function RealOceanMap() {
       markersLayerRef.current = L.layerGroup().addTo(map);
       trackLayerRef.current = L.layerGroup().addTo(map);
 
-      // Track cursor coordinates
+      // Track cursor coordinates directly via DOM ref (Zero component re-renders on mousemove)
       map.on('mousemove', (e) => {
-        setCursorCoords({
-          lat: e.latlng.lat,
-          lng: e.latlng.lng,
-        });
+        if (cursorCoordsRef.current) {
+          cursorCoordsRef.current.innerText = `${e.latlng.lat.toFixed(4)}°N, ${e.latlng.lng.toFixed(4)}°E`;
+        }
       });
 
       map.on('mouseout', () => {
-        setCursorCoords(null);
+        if (cursorCoordsRef.current) {
+          cursorCoordsRef.current.innerText = '14.2120°N, 68.3912°E (Survey Datum)';
+        }
       });
 
       mapInstanceRef.current = map;
@@ -394,19 +395,13 @@ function RealOceanMap() {
       </div>
 
       {/* Bottom Coordinates & Bathymetry Telemetry HUD */}
-      <div className="absolute bottom-4 left-4 z-10 flex items-center gap-2">
+      <div className="absolute bottom-4 left-4 z-10 flex items-center gap-2 pointer-events-none">
         <div className="px-3.5 py-1.5 rounded-xl bg-slate-950/85 backdrop-blur-md border border-white/20 text-white shadow-xl flex items-center gap-3 text-xs font-mono">
           <div className="flex items-center gap-1.5 text-cyan-400">
             <Compass className="w-3.5 h-3.5 animate-spin" style={{ animationDuration: '10s' }} />
             <span>GEO-FIX:</span>
           </div>
-          {cursorCoords ? (
-            <span>
-              {cursorCoords.lat.toFixed(4)}°N, {cursorCoords.lng.toFixed(4)}°E
-            </span>
-          ) : (
-            <span>14.2120°N, 68.3912°E (Survey Datum)</span>
-          )}
+          <span ref={cursorCoordsRef}>14.2120°N, 68.3912°E (Survey Datum)</span>
           <span className="text-slate-500">|</span>
           <span className="text-sky-300">DEPTH: ~48.2m MSL</span>
         </div>

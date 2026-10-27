@@ -14,16 +14,6 @@ body {
   overflow: hidden;
 }
 
-/* 3D Card Glass Shimmer & Perspective Base */
-.perspective-1200 {
-  perspective: 1200px;
-  transform-style: preserve-3d;
-}
-
-.preserve-3d {
-  transform-style: preserve-3d;
-}
-
 /* Leaflet Interactive Map Custom Styling */
 .leaflet-container {
   width: 100%;

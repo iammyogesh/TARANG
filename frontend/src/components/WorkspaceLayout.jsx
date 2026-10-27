@@ -12,11 +12,11 @@ export default function WorkspaceLayout() {
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
+      initial={{ opacity: 0, scale: 0.96 }}
       animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.9, rotateX: 20, z: -300 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed inset-0 z-10 flex flex-col p-6 md:p-8 pointer-events-auto overflow-y-auto perspective-1200"
+      exit={{ opacity: 0, scale: 0.9, y: 40 }}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      className="fixed inset-0 z-10 flex flex-col p-6 md:p-8 pointer-events-auto overflow-y-auto"
     >
       {/* Top Header Bar ("Tarang | Deep Scan Portal") */}
       <header className="max-w-7xl w-full mx-auto flex items-center justify-between pb-4 mb-4 select-none">
@@ -44,23 +44,23 @@ export default function WorkspaceLayout() {
       </header>
 
       {/* Main 60 / 40 Bento Grid Split */}
-      <main className="max-w-7xl w-full mx-auto flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch pb-2 preserve-3d">
-        {/* Left Column: 60% 3D Canyon Bathymetry (Unique 3D Unfolding Entrance) */}
+      <main className="max-w-7xl w-full mx-auto flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch pb-2">
+        {/* Left Column: 60% Ocean Geographic Map */}
         <motion.div
-          initial={{ opacity: 0, rotateY: -22, z: 120, x: -40 }}
-          animate={{ opacity: 1, rotateY: 0, z: 0, x: 0 }}
-          transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="lg:col-span-7 h-full preserve-3d"
+          initial={{ opacity: 0, y: 30, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="lg:col-span-7 h-full will-change-transform transform-gpu"
         >
           <GeospatialMap />
         </motion.div>
 
-        {/* Right Column: 40% Analytics Stack (Unique 3D Staggered Unfolding) */}
+        {/* Right Column: 40% Analytics Stack */}
         <motion.div
-          initial={{ opacity: 0, rotateY: 22, z: 120, x: 40 }}
-          animate={{ opacity: 1, rotateY: 0, z: 0, x: 0 }}
-          transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="lg:col-span-5 h-full preserve-3d"
+          initial={{ opacity: 0, y: 30, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.7, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
+          className="lg:col-span-5 h-full will-change-transform transform-gpu"
         >
           <AnalyticsStack />
         </motion.div>
